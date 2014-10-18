@@ -1,10 +1,9 @@
 <header id="content-header">
-  <h1>New Review for <%= link_to(@movie.title, @movie) %></h1>
+  <h1>New Review for <%= link_to @movie.title, @movie %></h2>
 </header>
 
-<%= form_for([@movie, @review]) do |f| %>
+<%= form_for [@movie, @review] do |f| %>
   <%= render "shared/errors", object: @review %>
-
   <fieldset>
     <ol>
       <li class="required">
@@ -12,8 +11,12 @@
         <%= f.text_field :name, size: 40, autofocus: true %>
       </li>
       <li class="required stars">
-        <%= f.label :stars %>  
-        <%= f.select :stars, Review::STARS, prompt: "Pick one" %>      
+        <%= f.label :stars %>
+        <% Review::STARS.each do |star| %>
+          <span class="star">
+            <%= f.radio_button :stars, star %> <%= star %>
+          </span>
+        <% end %>     
       </li>
       <li class="required">
         <%= f.label :comment %>
